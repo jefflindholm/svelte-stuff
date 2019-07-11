@@ -1,13 +1,20 @@
 <script>
-  let board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]];
-
-  const players = ["X", "O"];
   let turn = 0;
   let the_winner = "";
 
-  function clean() {
-    board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]];
+  export let board;
+  export let date; // this is used to signify a new game start time
+
+  // re-render if the prop changes
+  $: board;
+  $: {
+    console.log(`start ${date}`);
+    turn = 0;
+    the_winner = "";
   }
+
+  const players = ["X", "O"];
+
   function onClick(rIdx, cIdx) {
     if (the_winner !== "") return;
 
@@ -80,5 +87,3 @@
     {/each}
   </div>
 {/each}
-
-<button on:click={clean}>Reset</button>
