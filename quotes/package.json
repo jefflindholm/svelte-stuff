@@ -1,0 +1,35 @@
+{
+  "name": "svelte-quotes",
+  "version": "1.0.0",
+  "description": "A demo app of Svelte that displays quotes",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "start": "node server.js",
+    "prestart": "webpack",
+    "dev": "webpack-dev-server --content-base public"
+  },
+  "keywords": [
+    "svelte",
+    "sveltejs",
+    "javascript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.1",
+    "mini-css-extract-plugin": "^0.6.0",
+    "serve": "^11.0.0",
+    "style-loader": "^0.23.1",
+    "svelte": "^3.0.0",
+    "svelte-loader": "2.13.3",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
+  }
+}
