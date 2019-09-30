@@ -1,9 +1,9 @@
 import { prepareRoutes } from "@curi/router";
 
+import About from "./components/About.svelte";
 import Home from "./components/Home.svelte";
 import Protected from "./components/Protected.svelte";
 import Login from "./components/Login.svelte";
-import Logout from "./components/Logout.svelte";
 import NotFound from "./components/NotFound.svelte";
 
 import fakeAuth from "./fakeAuth";
@@ -15,6 +15,15 @@ export default prepareRoutes([
     respond: () => {
       return {
         body: Home
+      };
+    }
+  },
+  {
+    name: "About",
+    path: "more/about",
+    respond: () => {
+      return {
+        body: About
       };
     }
   },
