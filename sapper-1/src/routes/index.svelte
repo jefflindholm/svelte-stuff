@@ -1,53 +1,119 @@
-<style>
-  h1,
-  figure,
-  p {
-    text-align: center;
-    margin: 0 auto;
-  }
+<script>
+  import { onMount } from "svelte";
 
-  h1 {
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0.5em 0;
-    color: red;
-  }
+  let showAddForm = false;
+  let newFeedUrl = "https://news.ycombinator.com/rss";
+  let rssList = [];
+  let feedsData = [];
 
-  figure {
-    margin: 0 0 1em 0;
-  }
+  onMount(async () => {
+    const newRssList = await fetch("/api/feed").then(r => r.json());
+    console.log("mount", newRssList);
+    rssList = newRssList;
+  });
 
-  img {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 0 1em 0;
-  }
+  const reloadFeed = async () => {
+    feedsData = await fetch(`/api/refresh`).then(r => r.json());
+  };
 
-  p {
-    margin: 1em auto;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      font-size: 4em;
+  const addRssToList = async () => {
+    showAddForm = false;
+    const { added, rssList: newRssList } = await fetch("/api/feed", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ url: newFeedUrl })
+    }).then(r => r.json());
+    console.log(added, newRssList);
+    if (added) {
+      rssList = newRssList;
+      reloadFeed();
     }
+  };
+
+  const removeUrl = async url => {
+    const { removed, rssList: newRssList } = await fetch("/api/feed", {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ url: newFeedUrl })
+    }).then(r => r.json());
+    console.log(removed, newRssList);
+    if (removed) {
+      rssList = newRssList;
+      reloadFeed();
+    }
+  };
+</script>
+
+<style>
+  .container {
+    display: flex;
+  }
+  .left {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    min-width: 40%;
+  }
+  .right {
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  .add-feed {
+    display: flex;
+  }
+  .feed-input {
+    flex: 1;
   }
 </style>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>Sapper RSS Reader</title>
 </svelte:head>
 
-<h1>Great success!!</h1>
+{#if showAddForm}
+  <div class="add-feed">
+    <button on:click={() => (showAddForm = false)}>Cancel</button>
+    <input
+      class="feed-input"
+      type="text"
+      placeholder="http://rss.feed.com"
+      bind:value={newFeedUrl} />
+    <button on:click={addRssToList}>OK</button>
+  </div>
+{/if}
 
-<figure>
-  <img alt="Borat" src="great-success.png" />
-  <figcaption>HIGH FIVE!</figcaption>
-</figure>
+<div class="container">
+  <div class="left">
+    <button on:click={() => (showAddForm = true)}>Add</button>
 
-<p>
-  <strong>
-    Try editing this file (src/routes/index.svelte) to test live reloading.
-  </strong>
-</p>
+    <ul>
+      {#each rssList as feed, i}
+        <li>
+          {feed}
+          <button on:click={() => removeUrl(feed)}>Remove</button>
+        </li>
+      {/each}
+    </ul>
+  </div>
+  <div class="right">
+    <button on:click={reloadFeed}>Reload</button>
+    <div class="article-list">
+      {#each feedsData as feed}
+        <h1>{feed.title}</h1>
+        {#each feed.items as item}
+          <a href={item.link}>{item.title}</a>
+          <br />
+          {item.contentSnippet}
+          <hr />
+        {/each}
+      {/each}
+    </div>
+  </div>
+</div>
