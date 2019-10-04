@@ -1,6 +1,7 @@
 import { writable, get } from "svelte/store";
 
-const store = writable(false);
+const store = writable(localStorage.getItem('store')== 'true');
+store.subscribe(v => localStorage.setItem('store', v));
 
 export default {
   subscribe: store.subscribe,
