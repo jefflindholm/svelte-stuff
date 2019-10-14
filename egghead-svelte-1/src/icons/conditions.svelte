@@ -1,3 +1,13 @@
+<script>
+  export let condition = 'Clear';
+</script>
+
+<style>
+  svg {
+    width: 10rem;
+  }
+</style>
+
 {#if condition === 'Clouds'}
 <svg viewBox="2436.9 -843.1 275.5 274.1">
   <g data-name="cloudy icon" transform="translate(84 790)">

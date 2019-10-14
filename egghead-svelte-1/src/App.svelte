@@ -1,4 +1,8 @@
 <script>
+  import SliderCheck from "./components/SliderCheck.svelte";
+  import Hamburger from "./icons/hamburger.svelte";
+  import Logo from "./icons/logo.svelte";
+
   let showMenu = false;
   let darkModeActive = false;
   const toggleMenu = () => (showMenu = !showMenu);
@@ -6,11 +10,6 @@
 </script>
 
 <style>
-  .toggle-button__container {
-    display: flex;
-    padding-left: 4px;
-    padding-right: 4px;
-  }
   .mode-toggle__container {
     display: flex;
   }
@@ -18,48 +17,6 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
-  }
-
-  .mode-toggle__checkbox {
-    height: 0;
-    width: 0;
-    visibility: hidden;
-  }
-
-  .mode-toggle__label {
-    cursor: pointer;
-    text-indent: -9999px;
-    width: 35px;
-    height: 20px;
-    background: grey;
-    display: block;
-    border-radius: 10px;
-    position: relative;
-  }
-
-  .mode-toggle__label:after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-
-  .mode-toggle__checkbox:checked + label {
-    background: gray;
-  }
-
-  .mode-toggle__checkbox:checked + label:after {
-    left: calc(100% - 5px);
-    transform: translateX(-100%);
-  }
-
-  .mode-toggle__label:active:after {
-    width: 15px;
   }
 
   .root__container {
@@ -78,8 +35,9 @@
 */
 
   /*
+=========
     Slide Menu
-= = = = = = = = =
+=========
 */
   .side-menu__container {
     position: fixed;
@@ -204,7 +162,11 @@
     max-width: 4rem;
   }
 
-  /*Header*/
+  /*
+================-
+    Header
+================
+*/
   .main__header {
     width: 100%;
     display: grid;
@@ -226,8 +188,23 @@
   .left__section {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
-    max-width: 5rem;
+    grid-template-columns: 10px 30px 10px auto;
+  }
+
+  .hamburger__icon {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    z-index: 35;
+    height: 1rem;
+    padding-top: 0.25rem;
+    margin-left: 0.2rem;
+    cursor: pointer;
+  }
+
+  .logo__icon {
+    height: 2rem;
+    margin-left: 1rem;
+    grid-column-start: 3;
   }
 
   .date__text {
@@ -237,43 +214,11 @@
     margin: 0.5rem 0;
   }
 
-  /*SVGs*/
-  .hamburger__icon {
-    position: relative;
-    z-index: 35;
-    height: 1rem;
-    padding: 0.5rem 1.5rem;
-    margin-right: 1rem;
-    cursor: pointer;
-  }
-
-  .logo__icon {
-    height: 2rem;
-    margin-left: 1rem;
-  }
-
-  .logo__text {
-    fill: #2b244d;
-  }
-
-  .logo__text-dark {
-    fill: #ffff;
-  }
-
-  .hamburger__icon__fill {
-    fill: #2b244d;
-  }
-
-  .hamburger__icon__fill-dark {
-    fill: #ffff;
-  }
-
   /*
-================
+================-
     Body
 ================
 */
-
   .main-container__bg {
     height: 100%;
     width: 100%;
@@ -339,30 +284,24 @@
     <section class="menu-footer" />
   </nav>
 </aside>
+
 <div class="root__container">
   <header class:main__header-dark={darkModeActive} class="main__header">
 
     <div class="left__section">
-      <svg
-        on:click={toggleMenu}
-        class="hamburger__icon"
-        id="Menu_Burger_Icon" />
-      <svg class="logo__icon" />
+      <div class="hamburger__icon" on:click={toggleMenu} id="Menu_Burger_Icon">
+        <Hamburger darkMode={darkModeActive} />
+      </div>
+      <div class="logo__icon">
+        <Logo darkMode={darkModeActive} />
+      </div>
     </div>
 
     <h3 class="date__text">Today</h3>
 
     <div class="mode-toggle__container">
       <span class="mode-toggle__text">Light</span>
-      <div class="toggle-button__container">
-        <input
-          id="toggle-mode"
-          checked={darkModeActive}
-          on:click={toggleMode}
-          type="checkbox"
-          class="mode-toggle__checkbox" />
-        <label for="toggle-mode" class="mode-toggle__label" />
-      </div>
+      <SliderCheck checked={darkModeActive} on:click={toggleMode} />
       <span class="mode-toggle__text">Dark</span>
     </div>
   </header>
