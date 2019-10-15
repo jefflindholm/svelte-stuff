@@ -1,8 +1,13 @@
 <script>
-  import AddIcon from "../icons/add-icon.svelte";
-  import CityIllustration from "../icons/city-illustration.svelte";
+  import { navigateTo } from "svero";
+  import AddIcon from "../svg/add-icon.svelte";
+  import CityIllustration from "../svg/city-illustration.svelte";
 
   export let darkMode = false;
+
+  const addCard = () => {
+    navigateTo("/add");
+  };
 </script>
 
 <style>
@@ -42,7 +47,7 @@
   }
 </style>
 
-<div class="add__card" class:add__card-dark={darkMode}>
+<div class="add__card" class:add__card-dark={darkMode} on:click={addCard}>
   <div class="header__container">
     <span class="card__title">Add city</span>
   </div>

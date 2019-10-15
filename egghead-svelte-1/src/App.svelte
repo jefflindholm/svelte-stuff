@@ -1,7 +1,9 @@
 <script>
+  import { Router, Route } from "svero";
+  import Home from "./components/Home.svelte";
   import SliderCheck from "./components/SliderCheck.svelte";
-  import Hamburger from "./icons/hamburger.svelte";
-  import Logo from "./icons/logo.svelte";
+  import Hamburger from "./svg/hamburger.svelte";
+  import Logo from "./svg/logo.svelte";
 
   let showMenu = false;
   let darkModeActive = false;
@@ -310,7 +312,11 @@
     <div
       class="main-container__gb"
       class:main-container__bg-dark={darkModeActive} />
-    <router />
+    <Router>
+      <Route path="*">
+        <Home darkMode={darkModeActive} />
+      </Route>
+    </Router>
   </main>
 
   <footer class="main__footer">
