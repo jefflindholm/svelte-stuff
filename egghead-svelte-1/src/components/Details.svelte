@@ -7,16 +7,18 @@
   import DayDisplay from "./DayDisplay.svelte";
 
   // props
-  export let city;
+  export let router = {};
   export let temp;
   export let hum;
   export let state;
   export let wind;
+  export let darkMode;
 
   // internal values
   let dayData = [{}, {}, {}, {}, {}];
 
   let today;
+  const city = router.params.city;
 
   onMount(async () => {
     const todayNumberInWeek = new Date().getDay();

@@ -1,14 +1,19 @@
 <script>
   import { Router, Route } from "svero";
+  import Details from "./components/Details.svelte";
   import Home from "./components/Home.svelte";
   import SliderCheck from "./components/SliderCheck.svelte";
   import Hamburger from "./svg/hamburger.svelte";
   import Logo from "./svg/logo.svelte";
+  import { darkMode } from "./store.js";
 
   let showMenu = false;
-  let darkModeActive = false;
+  let darkModeActive;
+  const unsubscribe = darkMode.subscribe(value => {
+    darkModeActive = value;
+  });
   const toggleMenu = () => (showMenu = !showMenu);
-  const toggleMode = () => (darkModeActive = !darkModeActive);
+  const toggleMode = () => darkMode.update(mode => !mode);
 </script>
 
 <style>
@@ -274,7 +279,7 @@
       <div class="profile-image__container">
         <img
           class="profile__image"
-          src="https://avatars3.githubusercontent.com/u/5658460?s=460&v=4"
+          src="https://avatars0.githubusercontent.com/u/145883?s=460&v=4"
           alt="profile-image" />
       </div>
       <div class="account-details">
@@ -315,6 +320,9 @@
     <Router>
       <Route path="*">
         <Home darkMode={darkModeActive} />
+      </Route>
+      <Route path="/details:city">
+        <Details darkMode={darkModeActive} />
       </Route>
     </Router>
   </main>
