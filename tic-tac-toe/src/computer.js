@@ -35,9 +35,7 @@ const players = ["X", "O"];
 export function minimax(board, turn) {
   const player = players[turn];
   const winning = winner(board);
-  //console.log(`[${winning}]`, board);
   if (winning !== "") {
-    //console.log("returning winner");
     return { score: winning === player ? 1 : -1, x: -1, y: -1 }; // winner.rawValue * player.rawValue
   }
 
@@ -52,12 +50,9 @@ export function minimax(board, turn) {
         // Only possible moves
         var boardWithNewMove = [...board]; // Copy board to make it mutable
         boardWithNewMove[x] = [...board[x]];
-        //console.log("try move", boardWithNewMove);
         boardWithNewMove[x][y] = player; // Try the move
-        //console.log("try move", boardWithNewMove, board);
 
         let scoreForTheMove = -1 * minimax(boardWithNewMove, !turn * 1).score;
-        //console.log(players[turn], scoreForTheMove, x, y);
 
         if (scoreForTheMove > score) {
           score = scoreForTheMove;
