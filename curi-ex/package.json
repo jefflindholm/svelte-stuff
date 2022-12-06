@@ -17,7 +17,7 @@
     "@curi/svelte": "^2.0.0-beta.4",
     "@hickory/browser": "^2.0.1",
     "bulma": "^0.7.5",
-    "qs": "^6.9.0",
+    "qs": "^6.9.7",
     "sirv-cli": "^0.4.4"
   },
   "scripts": {
