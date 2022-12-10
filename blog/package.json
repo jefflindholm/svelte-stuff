@@ -12,7 +12,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "sirv-cli": "^0.4.4",
     "sqlite3": "^4.0.9",
     "swagger-express-validator": "^1.0.0",
